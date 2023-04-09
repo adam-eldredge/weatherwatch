@@ -13,14 +13,17 @@ const Navigation = () => {
         <>
           <Nav>
             <NavMenu>
-              <NavLink to='/' activeStyle>
-                <h3>Welcome</h3>
+            <NavLink to='/Favorites' activeStyle>
+                <h3>Favorites</h3>
               </NavLink>
-              <NavLink to='/Name' activeStyle>
-                <h3>Name</h3>
+              <NavLink to='/Examples' activeStyle>
+                <h3>Examples</h3>
+              </NavLink>
+              <NavLink to='/Create' activeStyle>
+                <h3>Create</h3>
               </NavLink>
               <NavLink to='/DataSet' activeStyle>
-                <h3>DataSet</h3>
+                <h3>Data Set</h3>
               </NavLink>
             </NavMenu>
             <NavBtnContain>
