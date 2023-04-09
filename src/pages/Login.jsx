@@ -6,7 +6,8 @@ function Login() {
     return (
         <div className = 'page'>
             <h2>Welcome to Weather Watch</h2>
-            <h3>Please Log In</h3>
+            <h2>Please Log In</h2>
+            <br />
 
             <div className = 'loginblock'>
                 <form>
@@ -21,6 +22,10 @@ function Login() {
                     </label>
                     <br />
                     <input type='submit' value='submit' />
+                    <h5 style = {{ fontSize: 15 }}>Don't have an account?</h5>
+                    <a href= '/SignUp'>
+                        <h5 style = {{fontSize: 15}}>Sign Up!</h5>
+                    </a>
                 </form>
             </div>
 
