@@ -24,7 +24,14 @@ function Login() {
                     <input type='submit' value='submit' />
                     <h5 style = {{ fontSize: 15 }}>Don't have an account?</h5>
                     <a href= '/SignUp'>
-                        <h5 style = {{fontSize: 15}}>Sign Up!</h5>
+                        <h5 style = {{fontSize: 15, display: "inline-block", float : "left"}}>
+                            Sign Up!  
+                        </h5>
+                    </a>
+                    <a href= '/SignUp'>
+                        <h5 style = {{fontSize: 15, display:"inline-block", float: "right"}}>
+                            Continue as Guest!
+                        </h5>
                     </a>
                 </form>
             </div>
