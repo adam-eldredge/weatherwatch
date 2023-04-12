@@ -13,6 +13,9 @@ const Navigation = () => {
         <>
           <Nav>
             <NavMenu>
+            <NavLink to='/Login' activeStyle>
+                <h3>Home</h3>
+              </NavLink>
             <NavLink to='/Favorites' activeStyle>
                 <h3>Favorites</h3>
               </NavLink>
