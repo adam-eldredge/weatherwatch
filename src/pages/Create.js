@@ -4,13 +4,13 @@ import '../styles.css';
 
 function Create() {
     return (
-        <div className = 'page'>
-            <h1>Create A Trend Query</h1>
-
-            <div className = 'loginblock'>
-                Insert Options here
+        <div className = 'page-container'>
+            <div className="page-text">
+                <h1>Create A Trend Query</h1>
+                <div className = 'loginblock'>
+                    Insert Options here
+                </div>
             </div>
-
         </div>
     )
 }
