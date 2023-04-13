@@ -1,6 +1,30 @@
 .page-container {
+    font-family: "Medium";
+    text-align: center;
+    color: white;
+    background: radial-gradient(rgba(255,255,255,0.1), rgba(0,0,0,0));
+    border-radius: 30px;
     position: relative;
     min-height: 100vh;
+    margin: 25px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.page-text {
+    font-family: "Medium";
+    text-align: center;
+    color: white;
+    border-radius: 30px;
+    position: relative;
+    height:100%;
+    width:100%;
+    margin-top: 30px;
+}
+.home-container {
+    font-family: "Medium";
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .content-wrap {
@@ -11,36 +35,71 @@
     background-color: #ADD8E6;
 }
 
-.page {
-    text-align: center;
+.accountblock {
+    font-family: "Medium";
+    float: center;
+    position: static;
     align-items: center;
-    position: fixed;
-    min-height: 100%;
-    min-width: 100%;
-    margin: 0;
+    box-sizing: border-box;
+    width: 50%;
+    margin: auto;
     padding: 0;
-    background-color: #DDDDDD;
-    color: black;
 }
 
-.loginblock {
-    position: absolute;
+.accountblock input{
+    position: static;
+    font-family: "Medium";
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.accountblock Button{
+    position: static;
+    font-family: "Medium";
+    background-color: white;
+    color: #6599ab;
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.accountblock Button:hover{
+    background-color: #6599ab;
+    color: white;
+    cursor: pointer;
+}
+
+
+.block {
+    font-family: "Medium";
+    position: relative;
     text-align: center;
     border-radius: 25px;
-    width: 40%;
+    width: 70%;
     height:fit-content;
-    top: 35%;
+    margin-bottom: 1%;
+    background-color:rgba(50,50,50,0.4);
     left: 50%;
-    padding: 20px;
-    background-color: #BBBBBB;
+    padding: 10px;
     display: block; 
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0%);
     font-size: calc(10px + 2vmin);
-    color: black;
-    text-decoration: none
+    color: white;
 }
 
 .field {
+    font-family: "Medium";
     width: 100%;
     height: 56px;
     border-radius: 4px;
@@ -49,6 +108,7 @@
     transition: 0.3s all;
   }
   .field:hover {
+    font-family: "Medium";
     background-color: rgba(255, 255, 255, 0.45);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
   }

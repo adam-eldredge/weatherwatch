@@ -4,13 +4,14 @@ import '../styles.css';
 
 function Favorites() {
     return (
-        <div className = 'page'>
+        <div className = 'page-container'>
+            <div className="page-text">
             <h1>Favorites</h1>
 
             <div className = 'loginblock'>
                 Insert favorites here
             </div>
-
+            </div>
         </div>
     )
 }

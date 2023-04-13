@@ -4,38 +4,18 @@ import '../styles.css';
 
 function Login() {
     return (
-        <div className = 'page'>
-            <h2>Welcome to Weather Watch</h2>
-            <h2>Please Log In</h2>
-            <br />
-
-            <div className = 'loginblock'>
-                <form>
-                    <label>
-                        Username  :{" "}
-                        <input type='text' name='username' />
-                    </label>
-                    <br />
-                    <label>
-                        Password &nbsp;:{" "}
-                        <input tpye='text' name='password' />
-                    </label>
-                    <br />
-                    <input type='submit' value='submit' />
-                    <h5 style = {{ fontSize: 15 }}>Don't have an account?</h5>
-                    <a href= '/SignUp'>
-                        <h5 style = {{fontSize: 15, display: "inline-block", float : "left"}}>
-                            Sign Up!  
-                        </h5>
-                    </a>
-                    <a href= '/SignUp'>
-                        <h5 style = {{fontSize: 15, display:"inline-block", float: "right"}}>
-                            Continue as Guest!
-                        </h5>
-                    </a>
-                </form>
+        <div className = 'page-container'>
+            <div className="page-text">
+                <h1>Please Log In Below</h1>
+                <br/>
+                <div className = 'accountblock'>
+                    <br/>
+                    <br/>
+                        <input placeholder="Username"/>
+                        <input placeholder="Password"/>
+                        <button type="submit" id="submitBtn" className="submitBtn">Submit</button>
+                </div>
             </div>
-
         </div>
     )
 }

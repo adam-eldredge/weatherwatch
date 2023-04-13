@@ -3,17 +3,18 @@ import {
     Nav,
     NavLink,
     NavMenu,
-    NavBtn,
-    NavBtnLink,
-    NavBtnContain,
+    NavTitle
   } from './navbarstyle';
+  import AuthButton from './AuthButton';
 
 const Navigation = () => {
-    return (
+  var auth = true;
+    return auth?(
         <>
           <Nav>
-            <NavMenu>
-            <NavLink to='/Login' activeStyle>
+          <NavTitle><h1>WeatherWatch</h1></NavTitle>
+          <NavMenu>
+            <NavLink to='/' activeStyle>
                 <h3>Home</h3>
               </NavLink>
             <NavLink to='/Favorites' activeStyle>
@@ -28,15 +29,20 @@ const Navigation = () => {
               <NavLink to='/DataSet' activeStyle>
                 <h3>Data Set</h3>
               </NavLink>
+              <AuthButton onClick={auth = false}/>
             </NavMenu>
-            <NavBtnContain>
-              <NavBtn>
-                <NavBtnLink to='/'> &nbsp;Login</NavBtnLink>
-              </NavBtn>
-              <NavBtn>
-                <NavBtnLink to='/SignUp'>Sign Up</NavBtnLink>
-              </NavBtn>
-            </NavBtnContain>
+          </Nav>
+        </>
+    ) : (
+      <>
+          <Nav>
+            <NavTitle><h1>WeatherWatch</h1></NavTitle>
+            <NavMenu>
+              <NavLink to='/' activeStyle>
+                <h3>Home</h3>
+              </NavLink>
+              <AuthButton onClick={auth = true}/>
+            </NavMenu>
           </Nav>
         </>
     )

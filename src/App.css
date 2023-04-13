@@ -31,3 +31,9 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "Medium";
+  src: local("Comfortaa-Medium"),
+    url("./fonts/Comfortaa-Medium.ttf") format("truetype");
+}
