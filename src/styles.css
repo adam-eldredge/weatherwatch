@@ -35,20 +35,67 @@
     background-color: #ADD8E6;
 }
 
+.accountblock {
+    font-family: "Medium";
+    float: center;
+    position: static;
+    align-items: center;
+    box-sizing: border-box;
+    width: 50%;
+    margin: auto;
+    padding: 0;
+}
+
+.accountblock input{
+    position: static;
+    font-family: "Medium";
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.accountblock Button{
+    position: static;
+    font-family: "Medium";
+    background-color: white;
+    color: #6599ab;
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.accountblock Button:hover{
+    background-color: #6599ab;
+    color: white;
+    cursor: pointer;
+}
+
+
 .block {
     font-family: "Medium";
     position: relative;
     text-align: center;
     border-radius: 25px;
-    width: 40%;
+    width: 70%;
     height:fit-content;
     margin-bottom: 1%;
+    background-color:rgba(50,50,50,0.4);
     left: 50%;
     padding: 10px;
     display: block; 
     transform: translate(-50%, 0%);
     font-size: calc(10px + 2vmin);
-    color: black;
+    color: white;
 }
 
 .field {

@@ -12,7 +12,9 @@ import {
   Dataset,
   Favorites,
   Examples,
-  Create
+  Create,
+  Login,
+  Signup
 } from "./pages";
 import Navigation from './components/Navigation';
 
@@ -22,10 +24,12 @@ function App() {
       <Navigation />
       <Routes>
         <Route path='/' element = {<Home />} />
+        <Route path='/Login' element = {<Login />} />
         <Route path='/DataSet' element = {<Dataset />} />
         <Route path='/Favorites' element = {<Favorites />} />
         <Route path='/Examples' element = {<Examples />} />
         <Route path='/Create' element = {<Create />} />
+        <Route path='/Signup' element = {<Signup />} />
 
       </Routes>
   </Router>

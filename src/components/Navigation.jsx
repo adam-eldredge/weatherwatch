@@ -5,12 +5,11 @@ import {
     NavMenu,
     NavTitle
   } from './navbarstyle';
-import AuthButton from './AuthButton';
-import { useAuth0 } from "@auth0/auth0-react";
+  import AuthButton from './AuthButton';
 
 const Navigation = () => {
-  const { isAuthenticated } = useAuth0();
-    return isAuthenticated?(
+  var auth = true;
+    return auth?(
         <>
           <Nav>
           <NavTitle><h1>WeatherWatch</h1></NavTitle>
@@ -30,7 +29,7 @@ const Navigation = () => {
               <NavLink to='/DataSet' activeStyle>
                 <h3>Data Set</h3>
               </NavLink>
-              <AuthButton/>
+              <AuthButton onClick={auth = false}/>
             </NavMenu>
           </Nav>
         </>
@@ -42,7 +41,7 @@ const Navigation = () => {
               <NavLink to='/' activeStyle>
                 <h3>Home</h3>
               </NavLink>
-              <AuthButton/>
+              <AuthButton onClick={auth = true}/>
             </NavMenu>
           </Nav>
         </>

@@ -1,13 +1,10 @@
 import React from "react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-
-import { useAuth0 } from "@auth0/auth0-react";
+import auth from "./authenticated";
 
 const AuthButton = () => {
-    const { isAuthenticated } = useAuth0();
-
-    return isAuthenticated? <LogoutButton/> : <LoginButton/>;
+    return auth? <LogoutButton/> : <LoginButton/>;
 };
 
 export default AuthButton;

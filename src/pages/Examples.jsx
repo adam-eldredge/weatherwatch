@@ -23,7 +23,7 @@ function Examples() {
         <div className = 'page-container'>
             <div className="page-text">
             <h1>Examples</h1>
-                <div className = 'loginblock' style={{height: '50%', top: '50%'}}>
+                <div className = 'block' style={{height: '50%', top: '50%'}}>
                     <div style={{overflow: 'auto', height:'100%'}}>
                         <ReactList
                             itemRenderer={renderItem}
