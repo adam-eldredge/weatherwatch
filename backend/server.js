@@ -2,7 +2,7 @@ const express = require('express');
 const oracledb = require('oracledb');
 const cors = require('cors');
 const app = express();
-const PORT = 5000;
+const PORT = 5005;
 const config = {
     user: 'siriwardhanea',
     password: 'uRWraeOA0XAnIBCco1KLrnkB',
@@ -21,16 +21,19 @@ app.get('/favorites', (req, res) => {
     })
 })
 
-app.get('/student', async (req, res) =>{ 
+app.get('/weathertuples', async (req, res) =>{ 
     
         try{
-            console.log('test1');
+            console.log('Awaiting connection to database...');
             const connection = await oracledb.getConnection(config);
-            console.log('test2');
+            console.log('Connected. Fetching number of tuples from database...');
             const result = await connection.execute('SELECT COUNT(*) FROM adameldredge.weather');
-            console.log('test3');
+            console.log('Logging results... :');
             console.log(result.rows)
             res.json(result.rows);
+            console.log('closing connection...');
+            connection.close();
+            console.log('Connection closed.');
         }
         catch (error){
             console.log(error);

@@ -74,6 +74,26 @@
     text-align: center;
 }
 
+.button {
+    position: static;
+    font-family: "Medium";
+    background-color: white;
+    color: #6599ab;
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+.button:hover{
+    background-color: #6599ab;
+    color: white;
+    cursor: pointer;
+}
+
 .accountblock Button:hover{
     background-color: #6599ab;
     color: white;

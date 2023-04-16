@@ -1,5 +1,5 @@
 import React from "react";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import axios from "axios";
 import '../styles.css';
 // ^This will be used to link to the sign up page
@@ -7,19 +7,18 @@ import '../styles.css';
 function DataSet() {
     const [message, setMessage] = useState("");
     const getInfo = () => {
-    try{
-      axios.get('/student')
-      .then((res)=>{
-        console.log(res.status)
-        console.log(res.data)
-        setMessage(res.data)
-      }) 
+      try {
+        axios.get('/weathertuples')
+        .then((res)=>{
+          console.log(res.status)
+          console.log(res.data)
+          setMessage(res.data)
+        }) 
+      }
+      catch (error) {
+        console.log(error)
+      }
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {getInfo()}, []);
     
   return (
         <div className='page-container' style={{textAlign: 'center', color: 'white'}}>
@@ -33,9 +32,8 @@ function DataSet() {
                         Click Here to View Dataset
                     </a>
                 </div>
-                <div>
-                    Number of tuples in the database: {message}
-                </div>
+                <button className="button" style={{width:'40%'}} onClick={getInfo}>Request Number of Tuples in Database</button>
+                <h2 style={{color:'orange'}}>{message}</h2>
             </div>
         </div>
     )

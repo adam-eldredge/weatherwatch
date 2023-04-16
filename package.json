@@ -2,7 +2,7 @@
   "name": "weatherwatch",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5005",
   "dependencies": {
     "@auth0/auth0-react": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -45,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "kill-port": "^2.0.1"
   }
 }
