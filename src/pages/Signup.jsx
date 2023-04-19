@@ -12,8 +12,8 @@ function Signup() {
                     <br/>
                     <br/>
                         <input placeholder="Username"/>
-                        <input placeholder="Password"/>
-                        <input placeholder="Confirm Password"/>
+                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Confirm Password"/>
                         <button type="submit" id="submitBtn" className="submitBtn">Submit</button>
                 </div>
             </div>
