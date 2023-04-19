@@ -59,6 +59,19 @@
     text-align: center;
 }
 
+.input {
+    position: static;
+    font-family: "Medium";
+    width: 60%;
+    height: 4vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 22px;
+    text-align: center;
+}
+
 .accountblock Button{
     position: static;
     font-family: "Medium";
@@ -131,4 +144,35 @@
     font-family: "Medium";
     background-color: rgba(255, 255, 255, 0.45);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .react-datepicker {
+    font-size: 1em;
+  }
+  .react-datepicker__header {
+    padding-top: 0.8em;
+  }
+  .react-datepicker__month {
+    margin: 0.4em 1em;
+  }
+  .react-datepicker__day-name, .react-datepicker__day {
+    width: 1.9em;
+    line-height: 1.9em;
+    margin: 0.166em;
+  }
+  .react-datepicker__current-month {
+    font-size: 1em;
+  }
+  .react-datepicker__navigation {
+    top: 1em;
+    line-height: 1.7em;
+    border: 0.45em solid transparent;
+  }
+  .react-datepicker__navigation--previous {
+    border-right-color: #ccc;
+    left: 1em;
+  }
+  .react-datepicker__navigation--next {
+    border-left-color: #ccc;
+    right: 1em;
   }
