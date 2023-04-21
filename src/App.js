@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./App.css";
 import './styles.css';
 import "./fonts/Comfortaa-Bold.ttf";
@@ -16,23 +16,33 @@ import {
   Login,
   Signup
 } from "./pages";
+import axios from "axios";
 import Navigation from './components/Navigation';
 
 function App() {
+  const [LoggedIn, setLoggedIn] = useState("no");
+  try {
+    axios.get('/checkauth')
+    .then(res => {
+      setLoggedIn(res.data);
+    })
+  }
+  catch (error){
+    console.log(error);
+  }
   return (
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path='/' element = {<Home />} />
-        <Route path='/Login' element = {<Login />} />
-        <Route path='/DataSet' element = {<Dataset />} />
-        <Route path='/Favorites' element = {<Favorites />} />
-        <Route path='/Examples' element = {<Examples />} />
-        <Route path='/Create' element = {<Create />} />
-        <Route path='/Signup' element = {<Signup />} />
-
-      </Routes>
-  </Router>
+      <Router>
+        <Navigation val={LoggedIn}/>
+        <Routes>
+          <Route path='/' element = {<Home />} />
+          <Route path='/Login' element = {<Login />} />
+          <Route path='/DataSet' element = {<Dataset />} />
+          <Route path='/Favorites' element = {<Favorites />} />
+          <Route path='/Examples' element = {<Examples />} />
+          <Route path='/Create' element = {<Create />} />
+          <Route path='/Signup' element = {<Signup />} />
+        </Routes>
+      </Router>
   );
 }
 

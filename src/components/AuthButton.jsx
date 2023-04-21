@@ -1,10 +1,9 @@
 import React from "react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-import auth from "./authenticated";
 
-const AuthButton = () => {
-    return auth? <LogoutButton/> : <LoginButton/>;
+const AuthButton = (props) => {
+    return props.val? <LogoutButton/> : <LoginButton/>;
 };
 
 export default AuthButton;
