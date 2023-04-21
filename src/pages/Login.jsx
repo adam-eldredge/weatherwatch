@@ -29,7 +29,8 @@ function Login() {
           })
         }
         catch (error) {
-          console.log(error);
+          setLoading("");
+          setErrMess("Something Went Wrong!")
         }
       }
     return (

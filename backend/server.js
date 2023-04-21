@@ -19,7 +19,6 @@ app.use(session({
 }));
 app.use(cors());
 var bodyParser = require('body-parser');
-const { useParams } = require('react-router-dom');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -51,6 +50,56 @@ app.get('/weathertuples', async (req, res) =>{
         }
     }
 )
+
+// CREATE NEW ACCOUNT
+app.post('/newuser/', async (req, res) => {
+    try {
+        console.log(req.body)
+        const username = req.body.username;
+        const password = req.body.password;
+        const password2 = req.body.password2;
+        console.log("username: " + username);
+        console.log("password: " + password);
+        console.log("password2: " + password);
+
+        if (username && password && password2) {
+            if (password === password2) {
+                // MAIN CODE BODY - ALL FIELDS ENTERED AND PASSWORDS MATCH
+
+                // Check to see if username is already in our database
+                const connection = await oracledb.getConnection(config);
+                const result = await connection.execute('SELECT * FROM adameldredge.USERS WHERE USERNAME = :username', [username])
+                if (result.rows.length === 1) {
+                    res.json("Looks like this username is already in use!");
+                    res.end();
+                }
+                else {
+                    const result2 = await connection.execute(
+                        'INSERT INTO adameldredge.USERS (username, password) VALUES (:username, :password)',
+                        [username, password]);
+                    if (result2.rowsAffected > 0) {
+                        const finalresult = await connection.execute('commit');
+                        console.log("Username: " + username + " Password: " + password + " added.");
+                        req.session.loggedin = true;
+                        req.session.username = username;
+                        console.log("user is logged in");
+                        res.json("/");
+                    }
+                }
+            }
+            else {
+                res.json("Uh Oh! Passwords do not match.");
+            }
+        }
+        else {
+            res.json("Uh Oh! Please fill all fields.");
+        }
+        res.end();
+    }
+    catch (error) {
+
+    } 
+})
 
 app.get('/examples1', async (req, res) => {
     try{
@@ -173,8 +222,7 @@ app.post('/auth', async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
-        res.status(400).json({message:error})
+        res.json("timeout error");
     }
 })
 
