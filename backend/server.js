@@ -101,6 +101,79 @@ app.post('/newuser/', async (req, res) => {
     } 
 })
 
+app.get('/examples1', async (req, res) => {
+    try{
+        console.log('test1');
+        const connection = await oracledb.getConnection(config);
+        console.log('test2');
+        const ex1query = "SELECT ENTRYDATE, (TEMPMAX -  TEMPMIN) AS TEMPRANGE FROM adameldredge.weather WHERE CITY = 'Tunis'";
+        const result = await connection.execute(ex1query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.get('/examples2', async (req, res) => {
+    try{
+        console.log('test1');
+        const connection = await oracledb.getConnection(config);
+        console.log('test2');
+        const ex2query = "SELECT extract(month from entrydate) AS month, AVG(tempavg) AS avgMonthlytemp FROM adameldredge.weather WHERE city = 'Tunis' AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate) ORDER BY avgMonthlytemp ASC";
+        const result = await connection.execute(ex2query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.get('/examples3', async (req, res) => {
+    try{
+        const connection = await oracledb.getConnection(config);
+        const ex3query = "";    //this should be a query (sql statement in a string)
+        const result = await connection.execute(ex3query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.get('/examples4', async (req, res) => {
+    try{
+        const connection = await oracledb.getConnection(config);
+        const ex4query = "";    //this should be a query (sql statement in a string)
+        const result = await connection.execute(ex4query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.get('/examples5', async (req, res) => {
+    try{
+        const connection = await oracledb.getConnection(config);
+        const ex5query = "";    //this should be a query (sql statement in a string)
+        const result = await connection.execute(ex5query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
 // CHECK IF USER IS AUTHED
 app.get('/checkauth', async (req, res) => {
     if (req.session.loggedin === true) {
