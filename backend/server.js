@@ -21,6 +21,21 @@ app.get('/favorites', (req, res) => {
     })
 })
 
+app.get('/examples1', async (req, res) => {
+    try{
+        console.log('test1');
+        const connection = await oracledb.getConnection(config);
+        console.log('test2');
+        const ex1query = "SELECT ENTRYDATE, (TEMPMAX -  TEMPMIN) AS TEMPRANGE FROM adameldredge.weather WHERE CITY = 'Tunis'";
+        const result = await connection.execute(ex1query);
+        console.log(result.rows)
+        res.json(result.rows);
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
 app.get('/student', async (req, res) =>{ 
     
         try{

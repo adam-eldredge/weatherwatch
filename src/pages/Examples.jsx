@@ -1,10 +1,29 @@
 import React from "react";
+import axios from "axios";
+import {useState, useEffect} from "react";
 import '../styles.css';
 import ReactList from 'react-list';
 // ^This will be used to link to the sign up page
 
 function Examples() {
+    const [message, setMessage] = useState("");
+    const getInfo = () => {
+    try{
+      axios.get('/examples1')
+      .then((res)=>{
+        console.log(res.status)
+        console.log(res.data)
+        setMessage(res.data)
+      }) 
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {getInfo()}, []);
+  
     const examples = [<div className="containerBlock">Example Query 1</div>,
+                      <div> {message} </div>,
                       <br/>,
                       <div className="containerBlock">Example Query 2</div>,
                       <br/>,
