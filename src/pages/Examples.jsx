@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles.css';
+import LineChart from "../components/LineChart"; 
 import axios from "axios";
 import 'react-widgets/styles.css';
 import Combobox from 'react-widgets/Combobox';
@@ -24,21 +25,43 @@ function Examples() {
     );
 
     const [message, setMessage] = useState("");
+    const [graphData, setgraphData] = useState({});
+    
     const getInfo = (url) => {
         try{
             axios.get(url)
             .then((res)=>{
-            console.log(res.status)
-            console.log(res.data)
-            setMessage(res.data)
+                console.log(res.status)
+                console.log(res.data)
+                console.log(res.data.map((d)=>d[0]))
+                console.log(res.data.map((d)=>d[1]))                
+                setMessage(res.data);
+                var XArray = res.data.map((d)=>d[0]);
+                var YArray = res.data.map((d)=>d[1]);
+                console.log(XArray)
+                console.log(YArray)
+                setgraphData({
+                    labels: XArray,
+                    datasets: [
+                        {
+                            label: "bleh",
+                            data: YArray,
+                            backgroundColor: 'rgba(36, 29, 201, 0.75)',
+                            borderColor: 'rgba(75, 192, 255, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                });
             }) 
-        }
+        } 
         catch (error) {
             console.log(error)
         }
     }
+    //console.log(XArray)
+    //console.log(YArray)
+    console.log(graphData);
     //useEffect(() => {getInfo()}, []);
-
 
     return (
         <div className = 'page-container'>
@@ -72,7 +95,9 @@ function Examples() {
                     }}>
                             Generate
                             {
-                                <div>{message}</div>
+                                <div>
+                                    <LineChart chartData={graphData}/>
+                                </div>
                                 // This is where you would say onSubmit, take all values
                                 // If missing necessary values, reject and output error
                                 // Else, generate sql query and send to our weather database

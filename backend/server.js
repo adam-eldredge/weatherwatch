@@ -3,6 +3,7 @@ const oracledb = require('oracledb');
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
+const chart = require('chart.js/auto');
 
 const app = express();
 
@@ -106,7 +107,7 @@ app.get('/examples1', async (req, res) => {
         console.log('test1');
         const connection = await oracledb.getConnection(config);
         console.log('test2');
-        const ex1query = "SELECT ENTRYDATE, (TEMPMAX -  TEMPMIN) AS TEMPRANGE FROM adameldredge.weather WHERE CITY = 'Tunis'";
+        const ex1query = "SELECT extract(month from entrydate) AS x, AVG(tempmax - tempmin) AS y FROM adameldredge.weather WHERE city = 'Tunis' GROUP BY extract(month from entrydate) ORDER BY x";
         const result = await connection.execute(ex1query);
         console.log(result.rows)
         res.json(result.rows);
