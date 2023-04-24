@@ -55,11 +55,14 @@ function Examples() {
     );
     var XArray;
     var YArray;
+    var graphlabel1;
+    var graphlabel2;
     const [message, setMessage] = useState("");
     const [err, setErr] = useState("");
     const [graphData, setgraphData] = useState({});
+    const [graphOptions, setgraphOptions] = useState({});
     
-    const getInfo = (url) => {
+    const getInfo = (url, xLabel, yLabel, graphName) => {
         try{
             axios.post(url, {
                 cityName: {cityName}
@@ -78,13 +81,44 @@ function Examples() {
                     labels: XArray,
                     datasets: [
                         {
-                            label: "bleh",
+                            label: graphlabel1,
                             data: YArray,
-                            backgroundColor: 'rgba(36, 29, 201, 0.75)',
+                            backgroundColor: 'rgba(36, 29, 201, 1)',
                             borderColor: 'rgba(75, 192, 255, 1)',
                             borderWidth: 1
                         }
                     ]
+                });
+                setgraphOptions({
+                    scales: {
+                        x: {
+                          title: {
+                            display: true,
+                            text: xLabel,
+                            color: 'white'
+                          },
+                          ticks: {
+                            color: 'white'
+                          }
+                        },
+                        y: {
+                          title: {
+                            display: true,
+                            text: yLabel,
+                            color: 'white'
+                          },
+                          ticks: {
+                            color: 'white'
+                          }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                          labels: {
+                            color: 'white' //change legend label color to green
+                          }
+                        }
+                    }
                 });
             }) 
         } 
@@ -135,29 +169,33 @@ function Examples() {
                     </div>
                     </div>
                     <button className="button" style={{marginTop:'5%'}} onClick={()=>{
-                        if (query && cityName) {
-                            setErr("")
+                    
+                       if (query && cityName) {
                             if (query === 'Example Query 1')
                             {
-                                setMessage("Average temperature range in " + cityName + " for each month of the year");
-                                getInfo('/examples1');
+                                graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
+                                getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', message);
                             }
                             else if (query === 'Example Query 2')
                             {
-                                setMessage("Average monthly windspeed in " + cityName + " between 2018-09-19 and 2019-01-19")
-                                getInfo('/examples2');
+                                graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-09-19 and 2019-01-19");
+                                getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', message);
                             }    
                             else if (query === 'Example Query 3')
+                            {   //planning to have two graphs on the same chart. might need a new function instead of getInfo to make things simpler
+                                // Update second city name to cityName2
+                                graphlabel1 = "Max temperature recorded for each month of the year in " + cityName;
+                                graphlabel2 = "Max temperature recorded for each month of the year in " + cityName;
                                 getInfo('/examples3');
+                            }
                             else if (query === 'Example Query 4')
                                 getInfo('/examples4');
                             else if (query === 'Example Query 5')
                                 getInfo('/examples5');
-                        }
+                            }
                         else {
                             setErr("Invalid: Please Select a Query and City");
                         }
-                        
                     }}>
                             Generate
                             {
@@ -172,6 +210,7 @@ function Examples() {
                         <h5>{message}</h5>
                         <h5 style={{color:'red'}}>{err}</h5>
                         {graphData.labels? <LineChart chartData={graphData}/> : <div/>}
+
                     </div>
                 </div>
             </div>
