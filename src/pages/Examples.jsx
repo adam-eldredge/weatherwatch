@@ -8,7 +8,24 @@ import { useState, useEffect } from "react";
 
 function Examples() {
 
+    const[cityNameArr, setCityNameArr] = useState([]);
+    const[cityName, setCityName] = useState('');
     const[query,setQuery] = useState(null);
+
+    if (cityNameArr.length === 0) {
+        try {
+            axios.get('/cities')
+            .then((res) => {
+                res.data.forEach(
+                    setCityNameArr(cityNameArr.concat(res.data))
+                )
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     const renderItem = ({ item }) => (
         <>
             <span
@@ -22,14 +39,31 @@ function Examples() {
             { item }
         </>
     );
+
+    const renderCity = ({ item }) => (
+        <>
+            <span
+                style = {{
+                    height: 18,
+                    display: "inline-block",
+                    verticalAlign: "text-bottom",
+                    backgroundColor: item.toString().toLowerCase(),
+                }}
+            />
+            { item }
+        </>
+    );
     var XArray;
     var YArray;
     const [message, setMessage] = useState("");
+    const [err, setErr] = useState("");
     const [graphData, setgraphData] = useState({});
     
     const getInfo = (url) => {
         try{
-            axios.get(url)
+            axios.post(url, {
+                cityName: {cityName}
+            }) 
             .then((res)=>{
                 console.log(res.status)
                 console.log(res.data)
@@ -66,12 +100,15 @@ function Examples() {
     return (
         <div className = 'page-container'>
             <div className="page-text">
-            <h1>Examples</h1>
+            <h1>Queries</h1>
                 <div className = 'block' style={{justifyContent:'center'}}>
-                    Select an Example Query:
+                    <div className="block" style={{background:'none', display:'flex'}}>
+                    <div style={{marginRight:'10%'}}>
+                    Select a Query:
                     <Combobox
-                        style={{width: '50%', marginTop:'2%',  marginLeft: 'auto', marginRight: 'auto'}}
-                            defaultValue="Select Query"
+                        style={{width: '100%', marginTop:'2%',  marginLeft: 'auto', marginRight: 'auto'}}
+                            placeholder="Select Query"
+                            defaultValue=""
                             renderListItem={renderItem}
                             query = { query }
                             onChange={query => {
@@ -81,23 +118,46 @@ function Examples() {
                             data={['Example Query 1', 'Example Query 2', 'Example Query 3', 
                                     'Example Query 4', 'Example Query 5']}
                     />
+                    </div>
+                    <div>
+                    Select a City:
+                    <Combobox
+                        style={{width: '100%', marginTop:'2%',  marginLeft: 'auto', marginRight: 'auto'}}
+                            defaultValue=""
+                            placeholder="Select City"
+                            renderListItem={renderCity}
+                            cityName = { cityName }
+                            onChange={cityName => {
+                                setCityName(cityName[0]);
+                            }}
+                            data={cityNameArr}
+                    />
+                    </div>
+                    </div>
                     <button className="button" style={{marginTop:'5%'}} onClick={()=>{
-                        if (query === 'Example Query 1')
-                        {
-                            setMessage("Average temperature range in Tunis for each month of the year");
-                            getInfo('/examples1');
+                        if (query && cityName) {
+                            setErr("")
+                            if (query === 'Example Query 1')
+                            {
+                                setMessage("Average temperature range in " + cityName + " for each month of the year");
+                                getInfo('/examples1');
+                            }
+                            else if (query === 'Example Query 2')
+                            {
+                                setMessage("Average monthly windspeed in " + cityName + " between 2018-09-19 and 2019-01-19")
+                                getInfo('/examples2');
+                            }    
+                            else if (query === 'Example Query 3')
+                                getInfo('/examples3');
+                            else if (query === 'Example Query 4')
+                                getInfo('/examples4');
+                            else if (query === 'Example Query 5')
+                                getInfo('/examples5');
                         }
-                        else if (query === 'Example Query 2')
-                        {
-                            setMessage("Average monthly windspeed in Tunis between 2018-09-19 and 2019-01-19")
-                            getInfo('/examples2');
-                        }    
-                        else if (query === 'Example Query 3')
-                            getInfo('/examples3');
-                        else if (query === 'Example Query 4')
-                            getInfo('/examples4');
-                        else if (query === 'Example Query 5')
-                            getInfo('/examples5');
+                        else {
+                            setErr("Invalid: Please Select a Query and City");
+                        }
+                        
                     }}>
                             Generate
                             {
@@ -109,7 +169,8 @@ function Examples() {
                             }
                     </button>
                     <div>
-                        {message}  
+                        <h5>{message}</h5>
+                        <h5 style={{color:'red'}}>{err}</h5>
                         {graphData.labels? <LineChart chartData={graphData}/> : <div/>}
                     </div>
                 </div>
