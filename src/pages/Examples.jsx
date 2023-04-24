@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 function Examples() {
 
     const[query,setQuery] = useState(null);
-
     const renderItem = ({ item }) => (
         <>
             <span
@@ -23,7 +22,8 @@ function Examples() {
             { item }
         </>
     );
-
+    var XArray;
+    var YArray;
     const [message, setMessage] = useState("");
     const [graphData, setgraphData] = useState({});
     
@@ -35,9 +35,9 @@ function Examples() {
                 console.log(res.data)
                 console.log(res.data.map((d)=>d[0]))
                 console.log(res.data.map((d)=>d[1]))                
-                setMessage(res.data);
-                var XArray = res.data.map((d)=>d[0]);
-                var YArray = res.data.map((d)=>d[1]);
+                //setMessage(res.data);
+                XArray = res.data.map((d)=>d[0]);
+                YArray = res.data.map((d)=>d[1]);
                 console.log(XArray)
                 console.log(YArray)
                 setgraphData({
@@ -58,8 +58,8 @@ function Examples() {
             console.log(error)
         }
     }
-    //console.log(XArray)
-    //console.log(YArray)
+    console.log(XArray)
+    console.log(YArray)
     console.log(graphData);
     //useEffect(() => {getInfo()}, []);
 
@@ -83,9 +83,15 @@ function Examples() {
                     />
                     <button className="button" style={{marginTop:'5%'}} onClick={()=>{
                         if (query === 'Example Query 1')
+                        {
+                            setMessage("Average temperature range in Tunis for each month of the year");
                             getInfo('/examples1');
+                        }
                         else if (query === 'Example Query 2')
+                        {
+                            setMessage("Average monthly windspeed in Tunis between 2018-09-19 and 2019-01-19")
                             getInfo('/examples2');
+                        }    
                         else if (query === 'Example Query 3')
                             getInfo('/examples3');
                         else if (query === 'Example Query 4')
@@ -95,15 +101,17 @@ function Examples() {
                     }}>
                             Generate
                             {
-                                <div>
-                                    <LineChart chartData={graphData}/>
-                                </div>
+                                
                                 // This is where you would say onSubmit, take all values
                                 // If missing necessary values, reject and output error
                                 // Else, generate sql query and send to our weather database
                                 // With the tuples that get passed back, figure out how to output data.
                             }
                     </button>
+                    <div>
+                        {message}  
+                        {graphData.labels? <LineChart chartData={graphData}/> : <div/>}
+                    </div>
                 </div>
             </div>
         </div>
