@@ -38,9 +38,15 @@ function App() {
           <Route path='/Login' element = {<Login />} />
           <Route path='/DataSet' element = {<Dataset />} />
           <Route path='/Favorites' element = {<Favorites />} />
-          <Route path='/Examples' element = {<Examples />} />
+          <Route path='/Queries' element = {<Examples />} />
           <Route path='/Create' element = {<Create />} />
           <Route path='/Signup' element = {<Signup />} />
+          <Route path="*" element={
+            <div className='page-container'>
+              <br/>
+              <h1> ERROR 404: PAGE NOT FOUND </ h1>
+            </div>
+          } />
         </Routes>
       </Router>
   );

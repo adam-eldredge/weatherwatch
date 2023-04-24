@@ -20,8 +20,8 @@ const Navigation = (props) => {
           <NavLink to='/Favorites' activeStyle>
               <h3>Favorites</h3>
             </NavLink>
-            <NavLink to='/Examples' activeStyle>
-              <h3>Examples</h3>
+            <NavLink to='/Queries' activeStyle>
+              <h3>Queries</h3>
             </NavLink>
             <NavLink to='/Create' activeStyle>
               <h3>Create</h3>

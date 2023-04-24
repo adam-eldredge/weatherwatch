@@ -102,13 +102,31 @@ app.post('/newuser/', async (req, res) => {
     } 
 })
 
-app.get('/examples1', async (req, res) => {
+app.get('/cities', async (req, res) => {
+    try{
+        const connection = await oracledb.getConnection(config);
+        const getCities = "SELECT DISTINCT city FROM adameldredge.weather"
+        const result = await connection.execute(getCities);
+        connection.close();
+        console.log(result.rows);
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.post('/examples1', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    console.log("City Name: " + cityName);
     try{
         console.log('test1');
         const connection = await oracledb.getConnection(config);
         console.log('test2');
-        const ex1query = "SELECT extract(month from entrydate) AS x, AVG(tempmax - tempmin) AS y FROM adameldredge.weather WHERE city = 'Tunis' GROUP BY extract(month from entrydate) ORDER BY x";
-        const result = await connection.execute(ex1query);
+        const result = await connection.execute(
+            "SELECT extract(month from entrydate) AS x, AVG(tempmax - tempmin) AS y FROM adameldredge.weather WHERE city = :cityName GROUP BY extract(month from entrydate) ORDER BY x",
+            [cityName]);
         console.log(result.rows)
         res.json(result.rows);
     }
@@ -118,13 +136,16 @@ app.get('/examples1', async (req, res) => {
     }
 })
 
-app.get('/examples2', async (req, res) => {
+app.post('/examples2', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    console.log("City Name: " + cityName);
     try{
         console.log('test1');
         const connection = await oracledb.getConnection(config);
         console.log('test2');
-        const ex2query = "SELECT extract(month from entrydate) AS month, AVG(windspeed) AS avgWindspeed FROM adameldredge.weather WHERE city = 'Tunis' AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate), extract(year from entrydate) ORDER BY extract(year from entrydate) ASC, month ASC";
-        const result = await connection.execute(ex2query);
+        const result = await connection.execute(
+            "SELECT extract(month from entrydate) AS month, AVG(windspeed) AS avgWindspeed FROM adameldredge.weather WHERE city = :cityName AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate), extract(year from entrydate) ORDER BY extract(year from entrydate) ASC, month ASC",
+            [cityName]);
         console.log(result.rows)
         res.json(result.rows);
     }
@@ -134,7 +155,9 @@ app.get('/examples2', async (req, res) => {
     }
 })
 
-app.get('/examples3', async (req, res) => {
+app.post('/examples3', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    console.log("City Name: " + cityName);
     try{
         const connection = await oracledb.getConnection(config);
         const ex3query = "SELECT extract(month from entrydate) AS x, MAX(CASE WHEN city = 'Tunis' THEN tempmax ELSE NULL END) AS tunis_y,MAX(CASE WHEN city = 'Cairo' THEN tempmax ELSE NULL END) AS cairo_y FROM adameldredge.weather WHERE city IN ('Tunis', 'Cairo') GROUP BY extract(month from entrydate) ORDER BY x";   
@@ -148,7 +171,9 @@ app.get('/examples3', async (req, res) => {
     }
 })
 
-app.get('/examples4', async (req, res) => {
+app.post('/examples4', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    console.log("City Name: " + cityName);
     try{
         const connection = await oracledb.getConnection(config);
         const ex4query = "";    //this should be a query (sql statement in a string)
@@ -162,7 +187,9 @@ app.get('/examples4', async (req, res) => {
     }
 })
 
-app.get('/examples5', async (req, res) => {
+app.post('/examples5', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    console.log("City Name: " + cityName);
     try{
         const connection = await oracledb.getConnection(config);
         const ex5query = "";    //this should be a query (sql statement in a string)
