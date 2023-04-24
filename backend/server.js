@@ -123,7 +123,7 @@ app.get('/examples2', async (req, res) => {
         console.log('test1');
         const connection = await oracledb.getConnection(config);
         console.log('test2');
-        const ex2query = "SELECT extract(month from entrydate) AS month, AVG(tempavg) AS avgMonthlytemp FROM adameldredge.weather WHERE city = 'Tunis' AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate) ORDER BY avgMonthlytemp ASC";
+        const ex2query = "SELECT extract(month from entrydate) AS month, AVG(windspeed) AS avgWindspeed FROM adameldredge.weather WHERE city = 'Tunis' AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate), extract(year from entrydate) ORDER BY extract(year from entrydate) ASC, month ASC";
         const result = await connection.execute(ex2query);
         console.log(result.rows)
         res.json(result.rows);
