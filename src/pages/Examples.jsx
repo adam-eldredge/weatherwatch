@@ -24,10 +24,13 @@ function Examples() {
     );
     var XArray;
     var YArray;
+    var graphlabel1;
+    var graphlabel2;
     const [message, setMessage] = useState("");
     const [graphData, setgraphData] = useState({});
+    const [graphOptions, setgraphOptions] = useState({});
     
-    const getInfo = (url) => {
+    const getInfo = (url, xLabel, yLabel, graphName) => {
         try{
             axios.get(url)
             .then((res)=>{
@@ -44,13 +47,44 @@ function Examples() {
                     labels: XArray,
                     datasets: [
                         {
-                            label: "bleh",
+                            label: graphlabel1,
                             data: YArray,
-                            backgroundColor: 'rgba(36, 29, 201, 0.75)',
+                            backgroundColor: 'rgba(36, 29, 201, 1)',
                             borderColor: 'rgba(75, 192, 255, 1)',
                             borderWidth: 1
                         }
                     ]
+                });
+                setgraphOptions({
+                    scales: {
+                        x: {
+                          title: {
+                            display: true,
+                            text: xLabel,
+                            color: 'white'
+                          },
+                          ticks: {
+                            color: 'white'
+                          }
+                        },
+                        y: {
+                          title: {
+                            display: true,
+                            text: yLabel,
+                            color: 'white'
+                          },
+                          ticks: {
+                            color: 'white'
+                          }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                          labels: {
+                            color: 'white' //change legend label color to green
+                          }
+                        }
+                    }
                 });
             }) 
         } 
@@ -84,16 +118,20 @@ function Examples() {
                     <button className="button" style={{marginTop:'5%'}} onClick={()=>{
                         if (query === 'Example Query 1')
                         {
-                            setMessage("Average temperature range in Tunis for each month of the year");
-                            getInfo('/examples1');
+                            graphlabel1 = ("Average daily temperature range in Tunis for each month of the year");
+                            getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', message);
                         }
                         else if (query === 'Example Query 2')
                         {
-                            setMessage("Average monthly windspeed in Tunis between 2018-09-19 and 2019-01-19")
-                            getInfo('/examples2');
+                            graphlabel1 = ("Average monthly windspeed in Tunis between 2018-09-19 and 2019-01-19");
+                            getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', message);
                         }    
                         else if (query === 'Example Query 3')
+                        {   //planning to have two graphs on the same chart. might need a new function instead of getInfo to make things simpler
+                            graphlabel1 = "Max temperature recorded for each month of the year in Tunis";
+                            graphlabel2 = "Max temperature recorded for each month of the year in Cairo";
                             getInfo('/examples3');
+                        }
                         else if (query === 'Example Query 4')
                             getInfo('/examples4');
                         else if (query === 'Example Query 5')
@@ -109,8 +147,8 @@ function Examples() {
                             }
                     </button>
                     <div>
-                        {message}  
-                        {graphData.labels? <LineChart chartData={graphData}/> : <div/>}
+                         
+                        {graphData.labels? <LineChart chartData={graphData} chartOptions={graphOptions}/> : <div/>}
                     </div>
                 </div>
             </div>
