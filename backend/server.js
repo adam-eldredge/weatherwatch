@@ -137,7 +137,7 @@ app.get('/examples2', async (req, res) => {
 app.get('/examples3', async (req, res) => {
     try{
         const connection = await oracledb.getConnection(config);
-        const ex3query = "";    //this should be a query (sql statement in a string)
+        const ex3query = "SELECT extract(month from entrydate) AS x, MAX(CASE WHEN city = 'Tunis' THEN tempmax ELSE NULL END) AS tunis_y,MAX(CASE WHEN city = 'Cairo' THEN tempmax ELSE NULL END) AS cairo_y FROM adameldredge.weather WHERE city IN ('Tunis', 'Cairo') GROUP BY extract(month from entrydate) ORDER BY x";   
         const result = await connection.execute(ex3query);
         console.log(result.rows)
         res.json(result.rows);
