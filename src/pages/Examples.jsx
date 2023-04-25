@@ -13,6 +13,7 @@ function Examples() {
     const[cityNameArr, setCityNameArr] = useState([]);
     const[cityName, setCityName] = useState('');
     const[query,setQuery] = useState(null);
+    const[qNum, setQNum] = useState(0);
 
     if (cityNameArr.length === 0) {
         try {
@@ -136,7 +137,7 @@ function Examples() {
                             color: 'white', //change legend label color to green
                             font: {
                                 family: "Medium",
-                                size: 25
+                                size: 20
                             }
                           }
                         },
@@ -173,6 +174,21 @@ function Examples() {
                             onChange={query => {
                                 setQuery(query);
                                 setMessage('');     //this resets the message every change
+                                if (query === 'Example Query 1') {
+                                    setQNum(1)
+                                }
+                                else if (query === 'Example Query 2') {
+                                    setQNum(2)
+                                }
+                                else if (query === 'Example Query 3') {
+                                    setQNum(3)
+                                }
+                                else if (query === 'Example Query 4') {
+                                    setQNum(4)
+                                }
+                                else if (query === 'Example Query 5') {
+                                    setQNum(5)
+                                }
                             }}
                             data={['Example Query 1', 'Example Query 2', 'Example Query 3', 
                                     'Example Query 4', 'Example Query 5']}
@@ -193,50 +209,78 @@ function Examples() {
                     />
                     </div>
                     </div>
-                    <button className="button" style={{marginTop:'5%'}} onClick={()=>{
-                    
-                       if (query && cityName) {
+
+                    {
+                        // THIS IS FOR THE TWO BUTTONS
+                    }
+                    <button className="button" style={{marginTop:'0%'}} onClick={()=>{
+                        if (query && cityName) {
+                             setErr("");
+                             if (query === 'Example Query 1')
+                             {
+                                 graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
+                                 getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', message);
+                             }
+                             else if (query === 'Example Query 2')
+                             {
+                                 graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-01-19 and 2019-01-19");
+                                 getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', message);
+                             }    
+                             else if (query === 'Example Query 3')
+                             {   //planning to have two graphs on the same chart. might need a new function instead of getInfo to make things simpler
+                                 // Update second city name to cityName2
+                                 graphlabel1 = "Max temperature recorded for each month of the year in " + cityName;
+                                 graphlabel2 = "Max temperature recorded for each month of the year in " + cityName;
+                                 getInfo('/examples3');
+                             }
+                             else if (query === 'Example Query 4')
+                                 getInfo('/examples4');
+                             else if (query === 'Example Query 5')
+                                 getInfo('/examples5');
+                             }
+                         else {
+                             setErr("Invalid: Please Select a Query and City");
+                         }
+                        }}>
+                             Generate
+                             {
+
+                                 // This is where you would say onSubmit, take all values
+                                 // If missing necessary values, reject and output error
+                                 // Else, generate sql query and send to our weather database
+                                 // With the tuples that get passed back, figure out how to output data.
+                             }
+                    </button>
+                    <button className="button" style={{marginTop:'0%'}} onClick={()=>{
+                        if (query && cityName) {
                             setErr("");
-                            if (query === 'Example Query 1')
-                            {
-                                graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
-                                getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', message);
+                             // Try to add to user's favorites
+                             try {
+                                axios.post('/addFav', {
+                                    cityName: {cityName},
+                                    queryNum: qNum
+                                })
+                                .then((res) => {
+                                    console.log(res.data);
+                                })
+                             }
+                             catch (error) {
+                                console.log(error)
                             }
-                            else if (query === 'Example Query 2')
-                            {
-                                graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-01-19 and 2019-01-19");
-                                getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', message);
-                            }    
-                            else if (query === 'Example Query 3')
-                            {   //planning to have two graphs on the same chart. might need a new function instead of getInfo to make things simpler
-                                // Update second city name to cityName2
-                                graphlabel1 = "Max temperature recorded for each month of the year in " + cityName;
-                                graphlabel2 = "Max temperature recorded for each month of the year in " + cityName;
-                                getInfo('/examples3');
-                            }
-                            else if (query === 'Example Query 4')
-                                getInfo('/examples4');
-                            else if (query === 'Example Query 5')
-                                getInfo('/examples5');
-                            }
+                        }
                         else {
                             setErr("Invalid: Please Select a Query and City");
                         }
                     }}>
-                            Generate
-                            {
-                                
-                                // This is where you would say onSubmit, take all values
-                                // If missing necessary values, reject and output error
-                                // Else, generate sql query and send to our weather database
-                                // With the tuples that get passed back, figure out how to output data.
-                            }
+
+                        Favorite
+                             
                     </button>
+                    
                     <div>
                         <h5>{message}</h5>
                         <h5 style={{color:'red'}}>{err}</h5>
                         {graphData.labels? <LineChart chartData={graphData} chartOptions={graphOptions}/> : <div/>}
-
                     </div>
                 </div>
             </div>

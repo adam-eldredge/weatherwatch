@@ -23,9 +23,6 @@ const Navigation = (props) => {
             <NavLink to='/Queries' activeStyle>
               <h3>Queries</h3>
             </NavLink>
-            <NavLink to='/Create' activeStyle>
-              <h3>Create</h3>
-            </NavLink>
             <NavLink to='/DataSet' activeStyle>
               <h3>Data Set</h3>
             </NavLink>
