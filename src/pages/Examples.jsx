@@ -5,8 +5,10 @@ import axios from "axios";
 import 'react-widgets/styles.css';
 import Combobox from 'react-widgets/Combobox';
 import { useState, useEffect } from "react";
+import { Chart } from "chart.js";
 
 function Examples() {
+    // Set font for graphs
 
     const[cityNameArr, setCityNameArr] = useState([]);
     const[cityName, setCityName] = useState('');
@@ -95,28 +97,51 @@ function Examples() {
                           title: {
                             display: true,
                             text: xLabel,
-                            color: 'white'
+                            color: 'white',
+                            font: {
+                                family: "Medium",
+                                size: 15
+                            }
                           },
                           ticks: {
-                            color: 'white'
+                            color: 'white',
+                            font: {
+                                family: "Medium",
+                                size: 15
+                            }
                           }
                         },
                         y: {
                           title: {
                             display: true,
                             text: yLabel,
-                            color: 'white'
+                            color: 'white',
+                            font: {
+                                family: "Medium",
+                                size: 15
+                            }
                           },
                           ticks: {
-                            color: 'white'
+                            color: 'white',
+                            font: {
+                                family: "Medium",
+                                size: 15
+                            }
                           }
                         }
                     },
                     plugins: {
                         legend: {
                           labels: {
-                            color: 'white' //change legend label color to green
+                            color: 'white', //change legend label color to green
+                            font: {
+                                family: "Medium",
+                                size: 25
+                            }
                           }
+                        },
+                        tooltip: {
+                            
                         }
                     }
                 });
@@ -135,9 +160,9 @@ function Examples() {
         <div className = 'page-container'>
             <div className="page-text">
             <h1>Queries</h1>
-                <div className = 'block' style={{justifyContent:'center'}}>
+                <div className = 'block' style={{width:'70%',justifyContent:'center'}}>
                     <div className="block" style={{background:'none', display:'flex'}}>
-                    <div style={{marginRight:'10%'}}>
+                    <div style={{marginRight:'8%'}}>
                     Select a Query:
                     <Combobox
                         style={{width: '100%', marginTop:'2%',  marginLeft: 'auto', marginRight: 'auto'}}
@@ -153,7 +178,7 @@ function Examples() {
                                     'Example Query 4', 'Example Query 5']}
                     />
                     </div>
-                    <div>
+                    <div style={{marginLeft:'8%'}}>
                     Select a City:
                     <Combobox
                         style={{width: '100%', marginTop:'2%',  marginLeft: 'auto', marginRight: 'auto'}}
@@ -171,6 +196,7 @@ function Examples() {
                     <button className="button" style={{marginTop:'5%'}} onClick={()=>{
                     
                        if (query && cityName) {
+                            setErr("");
                             if (query === 'Example Query 1')
                             {
                                 graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
@@ -178,7 +204,7 @@ function Examples() {
                             }
                             else if (query === 'Example Query 2')
                             {
-                                graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-09-19 and 2019-01-19");
+                                graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-01-19 and 2019-01-19");
                                 getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', message);
                             }    
                             else if (query === 'Example Query 3')
@@ -209,7 +235,7 @@ function Examples() {
                     <div>
                         <h5>{message}</h5>
                         <h5 style={{color:'red'}}>{err}</h5>
-                        {graphData.labels? <LineChart chartData={graphData}/> : <div/>}
+                        {graphData.labels? <LineChart chartData={graphData} chartOptions={graphOptions}/> : <div/>}
 
                     </div>
                 </div>

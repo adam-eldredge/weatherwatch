@@ -23,9 +23,6 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-
-
-
 // SIGNOUT FUNCTION
 app.post('/signout', async(req, res) => {
     res.redirect("/login");
@@ -87,6 +84,7 @@ app.post('/newuser/', async (req, res) => {
                         res.json("/");
                     }
                 }
+                connection.close();
             }
             else {
                 res.json("Uh Oh! Passwords do not match.");
@@ -107,9 +105,9 @@ app.get('/cities', async (req, res) => {
         const connection = await oracledb.getConnection(config);
         const getCities = "SELECT DISTINCT city FROM adameldredge.weather"
         const result = await connection.execute(getCities);
-        connection.close();
         console.log(result.rows);
         res.json(result.rows);
+        connection.close();
     }
     catch (error) {
         console.log(error);
@@ -129,6 +127,7 @@ app.post('/examples1', async (req, res) => {
             [cityName]);
         console.log(result.rows)
         res.json(result.rows);
+        connection.close();
     }
     catch (error){
         console.log(error);
@@ -144,10 +143,11 @@ app.post('/examples2', async (req, res) => {
         const connection = await oracledb.getConnection(config);
         console.log('test2');
         const result = await connection.execute(
-            "SELECT extract(month from entrydate) AS month, AVG(windspeed) AS avgWindspeed FROM adameldredge.weather WHERE city = :cityName AND entrydate >= TO_DATE('2018-09-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate), extract(year from entrydate) ORDER BY extract(year from entrydate) ASC, month ASC",
+            "SELECT extract(month from entrydate) AS month, AVG(windspeed) AS avgWindspeed FROM adameldredge.weather WHERE city = :cityName AND entrydate >= TO_DATE('2018-01-19', 'YYYY-MM-DD') AND entrydate < TO_DATE('2019-01-19', 'YYYY-MM-DD') GROUP BY extract(month from entrydate), extract(year from entrydate) ORDER BY extract(year from entrydate) ASC, month ASC",
             [cityName]);
         console.log(result.rows)
         res.json(result.rows);
+        connection.close();
     }
     catch (error){
         console.log(error);
@@ -164,6 +164,7 @@ app.post('/examples3', async (req, res) => {
         const result = await connection.execute(ex3query);
         console.log(result.rows)
         res.json(result.rows);
+        connection.close();
     }
     catch (error){
         console.log(error);
@@ -180,6 +181,7 @@ app.post('/examples4', async (req, res) => {
         const result = await connection.execute(ex4query);
         console.log(result.rows)
         res.json(result.rows);
+        connection.close();
     }
     catch (error){
         console.log(error);
@@ -196,6 +198,7 @@ app.post('/examples5', async (req, res) => {
         const result = await connection.execute(ex5query);
         console.log(result.rows)
         res.json(result.rows);
+        connection.close();
     }
     catch (error){
         console.log(error);
