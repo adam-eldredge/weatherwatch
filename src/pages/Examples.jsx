@@ -14,6 +14,7 @@ function Examples() {
     const[cityName, setCityName] = useState('');
     const[city2Name, setCity2Name] = useState('');
     const[query,setQuery] = useState(null);
+    const[qNum, setQNum] = useState(0);
 
     if (cityNameArr.length === 0) {
         try {
@@ -156,6 +157,7 @@ function Examples() {
                                 
                             }
                         }
+
                     });
                 }) 
             }
@@ -230,6 +232,7 @@ function Examples() {
                                     size: 15
                                 }
                               }
+
                             }
                         },
                         plugins: {
@@ -277,6 +280,21 @@ function Examples() {
                             onChange={query => {
                                 setQuery(query);
                                 setMessage('');     //this resets the message every change
+                                if (query === 'Example Query 1') {
+                                    setQNum(1)
+                                }
+                                else if (query === 'Example Query 2') {
+                                    setQNum(2)
+                                }
+                                else if (query === 'Example Query 3') {
+                                    setQNum(3)
+                                }
+                                else if (query === 'Example Query 4') {
+                                    setQNum(4)
+                                }
+                                else if (query === 'Example Query 5') {
+                                    setQNum(5)
+                                }
                             }}
                             data={['Example Query 1', 'Example Query 2', 'Example Query 3', 
                                     'Example Query 4', 'Example Query 5']}
@@ -309,11 +327,14 @@ function Examples() {
                       )}
                     </div>                    
                     </div>
-                    <button className="button" style={{marginTop:'5%'}} onClick={()=>{
-                    
-                       if (query && cityName) {
-                            setErr("");
-                            if (query === 'Example Query 1')
+
+                    {
+                        // THIS IS FOR THE TWO BUTTONS
+                    }
+                    <button className="button" style={{marginTop:'0%'}} onClick={()=>{
+                        if (query && cityName) {
+                             setErr("");
+                             if (query === 'Example Query 1')
                             {
                                 graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
                                 getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', false);
@@ -342,25 +363,48 @@ function Examples() {
                                 graphlabel2 = "Average wind speed for each season between from 2019 to 2021 in " + city2Name;
                                 getInfo('/examples5', 'Month', 'Average Monthly Air Pressure (hPa)', true);
                             }    
+                         else {
+                             setErr("Invalid: Please Select a Query and City");
+                         }
+                        }}>
+                             Generate
+                             {
+
+                                 // This is where you would say onSubmit, take all values
+                                 // If missing necessary values, reject and output error
+                                 // Else, generate sql query and send to our weather database
+                                 // With the tuples that get passed back, figure out how to output data.
+                             }
+                    </button>
+                    <button className="button" style={{marginTop:'0%'}} onClick={()=>{
+                        if (query && cityName) {
+                             // Try to add to user's favorites
+                             try {
+                                axios.post('/addFav', {
+                                    cityName: {cityName},
+                                    queryNum: qNum
+                                })
+                                .then((res) => {
+                                    console.log(res.data);
+                                })
+                             }
+                             catch (error) {
+                                console.log(error)
                             }
+                        }
                         else {
                             setErr("Invalid: Please Select a Query and City");
                         }
                     }}>
-                            Generate
-                            {
-                                
-                                // This is where you would say onSubmit, take all values
-                                // If missing necessary values, reject and output error
-                                // Else, generate sql query and send to our weather database
-                                // With the tuples that get passed back, figure out how to output data.
-                            }
+
+                        Favorite
+                             
                     </button>
+                    
                     <div>
                         <h5>{message}</h5>
                         <h5 style={{color:'red'}}>{err}</h5>
                         {graphData.labels? <LineChart chartData={graphData} chartOptions={graphOptions}/> : <div/>}
-
                     </div>
                 </div>
             </div>

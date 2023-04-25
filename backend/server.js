@@ -244,6 +244,96 @@ app.get('/checkauth', async (req, res) => {
     }
 })
 
+// Add favorite info into user
+app.post('/addFav', async (req,res) => {
+    // Need to access cityName, QueryNum, UserID (from userName)
+    const username = req.session.username;
+    const queryNum = req.body.queryNum;
+    const cityName = req.body.cityName.cityName; 
+    
+    console.log("username: " + username);
+    console.log("query num: " + queryNum);
+    console.log("cityName: " + cityName);
+    try {
+        const connection = await oracledb.getConnection(config);
+        const uID = await connection.execute(
+            'SELECT userID FROM adameldredge.USERS where USERNAME = :username',
+            [username]
+        );
+        if (uID.rows.length > 0) {
+            const userID = uID.rows[0][0];
+            console.log(JSON.stringify(uID.rows[0][0]))
+            const result = await connection.execute(
+                'INSERT INTO adameldredge.FAVORITES (userID, cityName, queryNum) VALUES (:userID, :cityName, :queryNum)',
+                [userID, cityName, queryNum]
+            )
+            if (result.rowsAffected > 0) {
+                const res2 = await connection.execute('Commit')
+                console.log("Inputted into users favorites")
+            }
+            else {
+                console.log("No rows were effected")
+            }
+        }
+        else {
+            res.json("Invalid username and/or password!");
+            res.end();
+            console.log(uID.rows);
+        }
+        connection.close();
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
+app.get('/getFav', async (req, res) => {
+    const username = req.session.username;
+    console.log("username: " + username);
+
+    try {
+        const connection = await oracledb.getConnection(config);
+        const uID = await connection.execute(
+            'SELECT userID FROM adameldredge.USERS where USERNAME = :username',
+            [username]
+        );
+        if (uID.rows.length > 0) {
+            const userID = uID.rows[0][0];
+            console.log(JSON.stringify(uID.rows[0][0]))
+            const result = await connection.execute(
+                'SELECT querynum FROM adameldredge.FAVORITES WHERE userID = :userID',
+                [userID]
+            );
+            const result2 = await connection.execute(
+                'SELECT cityname FROM adameldredge.FAVORITES WHERE userID = :userID',
+                [userID]
+            );
+            if (result.rows.length > 0) {
+                console.log("this many favorites: " + result.rows.length)
+                console.log(result.rows);
+                console.log(result2.rows);
+                res.json({
+                    queryNum: result.rows,
+                    cityName: result2.rows
+                });
+            }
+            else {
+                res.json("User Has No Favorites")
+            }
+        }
+        else {
+            res.json("USER NOT FOUND");
+            res.end();
+        }
+        connection.close();
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
+
 // AUTHENTICATE USER
 app.post('/auth', async (req, res) => {
     try {

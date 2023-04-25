@@ -39,7 +39,6 @@ function App() {
           <Route path='/DataSet' element = {<Dataset />} />
           <Route path='/Favorites' element = {<Favorites />} />
           <Route path='/Queries' element = {<Examples />} />
-          <Route path='/Create' element = {<Create />} />
           <Route path='/Signup' element = {<Signup />} />
           <Route path="*" element={
             <div className='page-container'>
