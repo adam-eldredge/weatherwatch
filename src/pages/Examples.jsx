@@ -337,11 +337,13 @@ function Examples() {
                              if (query === 'Example Query 1')
                             {
                                 graphlabel1 = ("Average daily temperature range in " + cityName + " for each month of the year");
+                                graphlabel2 = "";
                                 getInfo('/examples1', 'Month', 'Average Daily Temperature Range (°C)', false);
                             }
                             else if (query === 'Example Query 2')
                             {
                                 graphlabel1 = ("Average monthly windspeed in " + cityName + " between 2018-01-19 and 2019-01-19");
+                                graphlabel2 = "";
                                 getInfo('/examples2', 'Month', 'Average Wind Speed (kmph)', false);
                             }    
                             else if (query === 'Example Query 3')
@@ -366,7 +368,7 @@ function Examples() {
                          else {
                              setErr("Invalid: Please Select a Query and City");
                          }
-                        }}>
+                        }}}>
                              Generate
                              {
 

@@ -230,6 +230,22 @@ app.post('/examples6', async (req, res) => {
         res.status(400).json({message:error})
     }
 })
+
+app.post('/example7', async (req, res) => {
+    const cityName = req.body.cityName.cityName;
+    try{
+        const connection = await oracledb.getConnection(config);
+        const result = await connection.execute("SELECT EXTRACT(month from EntryDate) AS Month, AVG(TempMin) AS AverageLowestTemperatures, AVG(TempMax) AS AverageHighestTemperatures, FROM adameldredge.Weather WHERE city = :cityName AND EntryDate BETWEEN TO_DATE('2020-01-01', 'YYYY-MM-DD') AND TO_DATE('2020-12-31', 'YYYY-MM-DD') GROUP BY Extract(month from EntryDate) Order by 1",
+        [cityName]);
+        console.log(result.rows)
+        res.json(result.rows);
+        connection.close();
+    }
+    catch (error){
+        console.log(error);
+        res.status(400).json({message:error})
+    }
+})
 // CHECK IF USER IS AUTHED
 app.get('/checkauth', async (req, res) => {
     if (req.session.loggedin === true) {
